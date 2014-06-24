@@ -2,7 +2,7 @@
 #Takes a character vector with one entry per document and its metadata
 textProcessor <- function(documents, metadata=NULL, 
                           lowercase=TRUE, removestopwords=TRUE, removenumbers=TRUE, removepunctuation=TRUE, stem=TRUE, 
-                          sparselevel=1, language="en",
+                          sparselevel=1, language="en", extrastops=NULL,
                           verbose=TRUE) {
   if(!require(tm,quietly=TRUE)) stop("Please install tm package to use this function. You will also need SnowballC if stemming.")
   if(stem) {
@@ -38,7 +38,12 @@ textProcessor <- function(documents, metadata=NULL,
   }
   if(removestopwords){
     if(verbose) cat("Removing stopwords... \n")
-    txt <- tm_map(txt, removeWords, stopwords(language)) #Remove stopwords
+    if(!is.null(extrastops)){
+      txt <- tm_map(txt, removeWords, c(stopwords(language), extrastops)) #Remove extra stopwords
+    }
+    if(is.null(extrastops)){
+      txt <- tm_map(txt, removeWords, stopwords(language)) #Remove just built-in stopwords
+    }
   }
   if(removenumbers){
     if(verbose) cat("Removing numbers... \n")

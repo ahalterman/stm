@@ -10,7 +10,7 @@ Function that takes in a vector of raw texts (in a variety of languages) and per
 textProcessor(documents, metadata=NULL, 
               lowercase=TRUE, removestopwords=TRUE, removenumbers=TRUE, 
               removepunctuation=TRUE, stem=TRUE, 
-              sparselevel=1, language="en", 
+              sparselevel=1, language="en", extrastops=NULL
               verbose=TRUE) 
 }
 
@@ -26,6 +26,9 @@ Whether all words should be converted to lower case. Defaults to TRUE.
 }
   \item{removestopwords}{
 Whether stop words should be removed using the SMART stopword list (in English) or the snowball stopword lists (for all other languages). Defaults to TRUE.
+}
+  \item{extrastops}{
+A vector of additional stopwords to be passed to \code{tm}'s stopword removal function.
 }
   \item{removenumbers}{
 Whether numbers should be removed. Defaults to TRUE.
